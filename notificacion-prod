@@ -1,0 +1,4 @@
+config.tiponotificacion=(email,whatsapp,ambas)
+config.whatzmeapitoken=877be9b47ac39dcbdac80d4fff18e554352abc13
+config.whatsappdestino=525537178391
+config.emaildestino=ing.juan.acc@gmail.com
