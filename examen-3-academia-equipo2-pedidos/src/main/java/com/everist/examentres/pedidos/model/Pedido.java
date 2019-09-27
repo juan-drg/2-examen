@@ -61,7 +61,7 @@ public class Pedido implements java.io.Serializable {
 		this.idpedido = idpedido;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "cliente_idcliente", nullable = false)
 	public Cliente getCliente() {
 		return this.cliente;
@@ -91,7 +91,7 @@ public class Pedido implements java.io.Serializable {
 		this.fechahoraentrega = fechahoraentrega;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "pedido")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "pedido")
 	public Set<PedidoHasProducto> getPedidoHasProductos() {
 		return this.pedidoHasProductos;
 	}

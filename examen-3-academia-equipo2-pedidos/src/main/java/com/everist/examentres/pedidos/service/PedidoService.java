@@ -1,5 +1,7 @@
 package com.everist.examentres.pedidos.service;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +17,10 @@ public class PedidoService {
 	public Pedido insertar(Pedido pedido) {
 		return  pedidoRepository.save(pedido);	
 	}
+	
+//	public int buscar(Date fecha) {
+//		return pedidoRepository.findByFecha(fecha).getIdpedido();
+//	}
 	
 	
 }

@@ -2,17 +2,19 @@ package com.everist.examentres.pedidos.rest;
 
 import java.util.Date;
 
-import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.everist.examentres.pedidos.model.Cliente;
 import com.everist.examentres.pedidos.model.Pedido;
+import com.everist.examentres.pedidos.model.PedidoHasProducto;
 import com.everist.examentres.pedidos.model.Producto;
+import com.everist.examentres.pedidos.request.PedidoRequest;
 import com.everist.examentres.pedidos.responses.PedidoResponse;
 import com.everist.examentres.pedidos.service.ClienteService;
+import com.everist.examentres.pedidos.service.HashService;
 import com.everist.examentres.pedidos.service.PedidoService;
 import com.everist.examentres.pedidos.service.ProductoService;
 
@@ -28,14 +30,15 @@ public class PedidoController {
 	@Autowired
 	private ProductoService productoService;
 	
+	@Autowired
+	private HashService hashService;
 	
-	@PostMapping("/pedido/cliente/{cliente}/producto/{producto}")
-	public PedidoResponse insertarPedido(@PathVariable int idcliente, @PathVariable int idproducto) {
+	@PostMapping("/pedido/")
+	public PedidoResponse insertarPedido(@RequestBody PedidoRequest pedidoRecibido) {
 		
-		Pedido pedido = new Pedido();
-		
-		Cliente cliente = clienteService.findById(idcliente);
-		Producto producto =  productoService.findById(idproducto);
+		Pedido pedido = pedidoRecibido.getPedido();
+		Cliente cliente = clienteService.findById(pedido.getCliente().getIdcliente());
+		Producto producto =  productoService.findById(pedidoRecibido.getProducto().getIdproducto());
 		
 		PedidoResponse response = new PedidoResponse();
 		
@@ -44,7 +47,18 @@ public class PedidoController {
 			pedido.setFechahoraregistro(new Date());
 			pedido.setCliente(cliente);
 			response.setSuccessful(true);
-			response.setMessage("Pedido Insertado");   
+			response.setValue(pedido);
+			response.setMessage("Pedido Insertado");
+			
+			pedidoService.insertar(pedido);
+			
+//			pedido.setIdpedido(pedidoService.buscar(pedido.getFechahoraentrega()));
+			PedidoHasProducto pedidoHasProducto = new PedidoHasProducto();
+			pedidoHasProducto.setPedido(pedido);
+			pedidoHasProducto.setProducto(producto);
+			
+			hashService.insertar(pedidoHasProducto);
+			
 		}catch (Exception e) {
 			response.setMessage("Error al insertar pedido");
 			response.setSuccessful(true);
