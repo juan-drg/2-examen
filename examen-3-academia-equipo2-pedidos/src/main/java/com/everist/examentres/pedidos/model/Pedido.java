@@ -67,8 +67,8 @@ public class Pedido implements java.io.Serializable {
 		return this.cliente;
 	}
 
-	public void setCliente(int i) {
-		this.cliente = i;
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 
 	@Temporal(TemporalType.TIMESTAMP)

@@ -37,7 +37,7 @@ public class PedidoController {
 		try {
 			pedido.setFechahoraentrega(new Date());
 			pedido.setFechahoraregistro(new Date());
-			pedido.setCliente(cliente.getIdcliente());
+			pedido.setCliente(cliente);
 			response.setSuccessful(true);
 			response.setMessage("Pedido Insertado");   
 		}catch (Exception e) {
