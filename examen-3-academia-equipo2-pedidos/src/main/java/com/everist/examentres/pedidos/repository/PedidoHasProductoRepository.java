@@ -1,5 +1,11 @@
 package com.everist.examentres.pedidos.repository;
 
-public interface PedidoHasProductoRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.everist.examentres.pedidos.model.PedidoHasProducto;
+
+@Repository
+public interface PedidoHasProductoRepository extends JpaRepository<PedidoHasProducto, Integer> {
 
 }
