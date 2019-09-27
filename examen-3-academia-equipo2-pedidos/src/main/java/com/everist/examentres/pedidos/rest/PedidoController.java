@@ -12,13 +12,21 @@ import com.everist.examentres.pedidos.model.Cliente;
 import com.everist.examentres.pedidos.model.Pedido;
 import com.everist.examentres.pedidos.model.Producto;
 import com.everist.examentres.pedidos.responses.PedidoResponse;
+import com.everist.examentres.pedidos.service.ClienteService;
 import com.everist.examentres.pedidos.service.PedidoService;
+import com.everist.examentres.pedidos.service.ProductoService;
 
 @RestController
 public class PedidoController {
 	
 	@Autowired
 	private PedidoService pedidoService;
+	
+	@Autowired
+	private ClienteService clienteService;
+	
+	@Autowired
+	private ProductoService productoService;
 	
 	@Autowired
 	private Environment environment;
@@ -29,8 +37,8 @@ public class PedidoController {
 		
 		Pedido pedido = new Pedido();
 		
-		Cliente cliente = ClienteService.buscarCliente(idcliente);
-		Producto producto =   ProductoService.buscarProducto(idproducto);
+		Cliente cliente = clienteService.findById(idcliente);
+		Producto producto =   productoService.findById(idproducto);
 		
 		PedidoResponse response = new PedidoResponse();
 		
@@ -44,6 +52,11 @@ public class PedidoController {
 			response.setMessage("Error al insertar pedido");
 			response.setSuccessful(true);
 		}
-			}
+		
+		
+		return response;
+		
+		
+	}
 	
 }

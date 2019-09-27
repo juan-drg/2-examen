@@ -12,7 +12,9 @@ public class PedidoService {
 	@Autowired
 	private PedidoRepository pedidoRepository;
 	
-	public Pedido incertar(Pedido pedido) {
+	public Pedido insertar(Pedido pedido) {
 		return  pedidoRepository.save(pedido);	
 	}
+	
+	
 }
