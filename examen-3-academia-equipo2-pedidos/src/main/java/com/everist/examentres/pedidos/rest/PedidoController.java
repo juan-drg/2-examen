@@ -28,9 +28,6 @@ public class PedidoController {
 	@Autowired
 	private ProductoService productoService;
 	
-	@Autowired
-	private Environment environment;
-	
 	
 	@PostMapping("/pedido/cliente/{cliente}/producto/{producto}")
 	public PedidoResponse insertarPedido(@PathVariable int idcliente, @PathVariable int idproducto) {
@@ -38,7 +35,7 @@ public class PedidoController {
 		Pedido pedido = new Pedido();
 		
 		Cliente cliente = clienteService.findById(idcliente);
-		Producto producto =   productoService.findById(idproducto);
+		Producto producto =  productoService.findById(idproducto);
 		
 		PedidoResponse response = new PedidoResponse();
 		
@@ -52,11 +49,8 @@ public class PedidoController {
 			response.setMessage("Error al insertar pedido");
 			response.setSuccessful(true);
 		}
-		
-		
 		return response;
-		
-		
 	}
+	
 	
 }
