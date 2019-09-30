@@ -69,11 +69,11 @@ public class NotificacionController {
 		if (datosConfiguracion.getTiponotificacion().indexOf("ambas")>-1) {
 			respuestas = enviarmensaje();
 			
-			MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), productosCadena.toString() , cliente.toString());
+			MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido" , "Datos de los productos "+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
 			respuestas.add(respuestaCorreo);
 		}else {
 			if (datosConfiguracion.getTiponotificacion().indexOf("email")>-1) {
-				MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), productosCadena.toString() , cliente.toString());
+				MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido" , "Datos de los productos "+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
 				respuestas.add(respuestaCorreo);
 			}
 			if (datosConfiguracion.getTiponotificacion().indexOf("whatsapp")>-1) {
