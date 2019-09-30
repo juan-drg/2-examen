@@ -67,23 +67,23 @@ public class NotificacionController {
 			productosCadena = productosCadena + objProducto.toString();
 		}
 		if (datosConfiguracion.getTiponotificacion().indexOf("ambas")>-1) {
-			respuestas = enviarmensaje();
+			respuestas = enviarmensaje(productosCadena.toString(),cliente);
 			
-			MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido" , "Datos de los productos "+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
+			MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido\n" , "\nDatos de los productos \n"+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
 			respuestas.add(respuestaCorreo);
 		}else {
 			if (datosConfiguracion.getTiponotificacion().indexOf("email")>-1) {
-				MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido" , "Datos de los productos "+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
+				MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), "Este es el pedido\n" , "\nDatos de los productos \n"+ productosCadena.toString()+  "Datos del cliente " +cliente.toString());
 				respuestas.add(respuestaCorreo);
 			}
 			if (datosConfiguracion.getTiponotificacion().indexOf("whatsapp")>-1) {
-				respuestas = enviarmensaje();
+				respuestas = enviarmensaje(productosCadena.toString(),cliente);
 			}
 		}
 		return respuestas;
 	}
 
-	public List<MensajeResponse> enviarmensaje() {
+	public List<MensajeResponse> enviarmensaje(String listaproductos, Cliente cliente) {
 		List<MensajeResponse> respuestas = new ArrayList<>();
 		try {
 			String urlMensaje = "https://whatzmeapi.com:10501/rest/api/enviar-mensaje?token="
@@ -92,7 +92,7 @@ public class NotificacionController {
 					+ datosConfiguracion.getWhatzmeapitoken();
 			Mensaje mensaje = new Mensaje();
 			mensaje.setNumero(datosConfiguracion.getWhatsappdestino());
-			mensaje.setMensaje("Aqui va la lista de producto");
+			mensaje.setMensaje("Esta es la lista de productos\n" + listaproductos);
 			RestTemplate restTemplate = new RestTemplate();
 			String respuestaMensaje = new RestTemplate().postForObject(urlMensaje, mensaje, String.class);
 			ObjectMapper objectMapper = new ObjectMapper();
@@ -102,9 +102,9 @@ public class NotificacionController {
 			MensajeUbicacion mensajeUbicacion = new MensajeUbicacion();
 			mensajeUbicacion.setNumero(datosConfiguracion.getWhatsappdestino());
 			// Obtener los valores desde un cliente
-			mensajeUbicacion.setLatitud("19.4326009");
-			mensajeUbicacion.setLongitud("-99.1333416");
-			mensajeUbicacion.setDireccion("nombre del cliente");
+			mensajeUbicacion.setLatitud(cliente.getLatitud());
+			mensajeUbicacion.setLongitud(cliente.getLongitud());
+			mensajeUbicacion.setDireccion(cliente.getNombre());
 			String respuestaUbicacion = new RestTemplate().postForObject(urlUbicacion, mensajeUbicacion, String.class);
 			MensajeResponse exito2 = objectMapper.readValue(respuestaMensaje, new TypeReference<MensajeResponse>() {
 			});
