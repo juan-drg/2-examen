@@ -1,12 +1,14 @@
 package com.everist.examentres.pedidos.request;
 
+import java.util.List;
+
 import com.everist.examentres.pedidos.model.Pedido;
 import com.everist.examentres.pedidos.model.Producto;
 
 public class PedidoRequest {
 	
 	private Pedido pedido;
-	private Producto producto;
+	private List<Producto> productos;
 	
 	public Pedido getPedido() {
 		return pedido;
@@ -14,12 +16,12 @@ public class PedidoRequest {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
-	public Producto getProducto() {
-		return producto;
-	}
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
 	
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
+	}
 	
 }
