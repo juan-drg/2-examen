@@ -73,7 +73,8 @@ public class PedidoController {
 			response.setProductos(productosObtenidos);
 			
 		}catch (Exception e) {
-			response.setMessage("Error al insertar pedido");
+			e.printStackTrace();
+			response.setMessage("Error al insertar pedido: " + e.getMessage());
 			response.setSuccessful(true);
 		}
 		return response;
