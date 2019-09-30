@@ -1,4 +1,4 @@
 config.tiponotificacion=(email,whatsapp,ambas)
-config.whatzmeapitoken=877be9b47ac39dcbdac80d4fff18e554352abc13
-config.whatsappdestino=5568557733
+config.whatzmeapitoken=12345
+config.whatsappdestino=525568557733
 config.emaildestino=ycitlallidiaz@gmail.com
