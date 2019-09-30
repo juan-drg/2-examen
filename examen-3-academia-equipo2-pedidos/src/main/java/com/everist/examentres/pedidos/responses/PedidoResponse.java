@@ -1,15 +1,20 @@
 package com.everist.examentres.pedidos.responses;
 
 
+import java.util.List;
+
 import com.everist.examentres.pedidos.model.Pedido;
+import com.everist.examentres.pedidos.model.Producto;
 
 public class PedidoResponse {
 	
 	
 	private boolean successful;
 	private String message;
-	private Pedido value;
+	private Pedido pedido;
+	private List<Producto> productos;
 	private int port;
+	
 	public boolean isSuccessful() {
 		return successful;
 	}
@@ -22,11 +27,17 @@ public class PedidoResponse {
 	public void setMessage(String message) {
 		this.message = message;
 	}
-	public Pedido getValue() {
-		return value;
+	public Pedido getPedido() {
+		return pedido;
 	}
-	public void setValue(Pedido value) {
-		this.value = value;
+	public void setPedido(Pedido pedido) {
+		this.pedido = pedido;
+	}
+	public List<Producto> getProductos() {
+		return productos;
+	}
+	public void setProductos(List<Producto> productos) {
+		this.productos = productos;
 	}
 	public int getPort() {
 		return port;
@@ -34,7 +45,5 @@ public class PedidoResponse {
 	public void setPort(int port) {
 		this.port = port;
 	}
-
-	
 	
 }

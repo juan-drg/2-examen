@@ -83,13 +83,13 @@ public class Producto implements java.io.Serializable {
 		this.url = url;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
-	public Set<PedidoHasProducto> getPedidoHasProductos() {
-		return this.pedidoHasProductos;
-	}
-
-	public void setPedidoHasProductos(Set<PedidoHasProducto> pedidoHasProductos) {
-		this.pedidoHasProductos = pedidoHasProductos;
-	}
+//	@OneToMany(fetch = FetchType.LAZY, mappedBy = "producto")
+//	public Set<PedidoHasProducto> getPedidoHasProductos() {
+//		return this.pedidoHasProductos;
+//	}
+//
+//	public void setPedidoHasProductos(Set<PedidoHasProducto> pedidoHasProductos) {
+//		this.pedidoHasProductos = pedidoHasProductos;
+//	}
 
 }

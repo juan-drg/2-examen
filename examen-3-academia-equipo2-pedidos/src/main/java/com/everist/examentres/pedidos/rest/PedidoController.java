@@ -1,6 +1,8 @@
 package com.everist.examentres.pedidos.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,7 +40,6 @@ public class PedidoController {
 		
 		Pedido pedido = pedidoRecibido.getPedido();
 		Cliente cliente = clienteService.findById(pedido.getCliente().getIdcliente());
-		Producto producto =  productoService.findById(pedidoRecibido.getProducto().getIdproducto());
 		
 		PedidoResponse response = new PedidoResponse();
 		
@@ -47,17 +48,29 @@ public class PedidoController {
 			pedido.setFechahoraregistro(pedido.getFechahoraentrega());
 			pedido.setCliente(cliente);
 			response.setSuccessful(true);
-			response.setValue(pedido);
+			response.setPedido(pedido);
 			response.setMessage("Pedido Insertado");
 			
 			Pedido pedidoRegistrado = pedidoService.insertar(pedido);
 			
-//			pedido.setIdpedido(pedidoService.buscar(pedido.getFechahoraentrega()));
-			PedidoHasProducto pedidoHasProducto = new PedidoHasProducto();
-			pedidoHasProducto.setPedido(pedidoRegistrado);
-			pedidoHasProducto.setProducto(producto);
+			List<Producto> productosRecibidos =  pedidoRecibido.getProductos();
+			List<Producto> productosObtenidos =  new ArrayList<>();
 			
-			hashService.insertar(pedidoHasProducto);
+			for (Producto producto : productosRecibidos) {
+				int buscaId = producto.getIdproducto();
+				Producto productoObtenido = productoService.findById(buscaId);
+				
+				PedidoHasProducto pedidoHasProducto = new PedidoHasProducto();
+				pedidoHasProducto.setPedido(pedidoRegistrado);
+				pedidoHasProducto.setProducto(productoObtenido);
+				
+				hashService.insertar(pedidoHasProducto);
+				
+				productosObtenidos.add(productoObtenido);
+				
+			}
+			
+			response.setProductos(productosObtenidos);
 			
 		}catch (Exception e) {
 			response.setMessage("Error al insertar pedido");
@@ -65,6 +78,9 @@ public class PedidoController {
 		}
 		return response;
 	}
+	
+	
+	
 	
 	
 }
