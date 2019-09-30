@@ -20,8 +20,7 @@ public class Cliente implements java.io.Serializable {
 	private String nombre;
 	private String latitud;
 	private String longitud;
-	@JsonIgnore
-	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
+//	private Set<Pedido> pedidos = new HashSet<Pedido>(0);
 
 	public Cliente() {
 	}
@@ -33,13 +32,13 @@ public class Cliente implements java.io.Serializable {
 		this.longitud = longitud;
 	}
 
-	public Cliente(int idcliente, String nombre, String latitud, String longitud, Set<Pedido> pedidos) {
-		this.idcliente = idcliente;
-		this.nombre = nombre;
-		this.latitud = latitud;
-		this.longitud = longitud;
-		this.pedidos = pedidos;
-	}
+//	public Cliente(int idcliente, String nombre, String latitud, String longitud, Set<Pedido> pedidos) {
+//		this.idcliente = idcliente;
+//		this.nombre = nombre;
+//		this.latitud = latitud;
+//		this.longitud = longitud;
+//		this.pedidos = pedidos;
+//	}
 
 	public int getIdcliente() {
 		return this.idcliente;
@@ -73,12 +72,20 @@ public class Cliente implements java.io.Serializable {
 		this.longitud = longitud;
 	}
 
-	public Set<Pedido> getPedidos() {
-		return this.pedidos;
+	@Override
+	public String toString() {
+		return "Cliente [idcliente=" + idcliente + ", nombre=" + nombre + ", latitud=" + latitud + ", longitud="
+				+ longitud + "]";
 	}
 
-	public void setPedidos(Set<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
+//	public Set<Pedido> getPedidos() {
+//		return this.pedidos;
+//	}
+//
+//	public void setPedidos(Set<Pedido> pedidos) {
+//		this.pedidos = pedidos;
+//	}
+	
+	
 
 }

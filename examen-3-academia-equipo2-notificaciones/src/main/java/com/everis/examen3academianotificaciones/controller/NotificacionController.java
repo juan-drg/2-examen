@@ -13,14 +13,19 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.everis.examen3academianotificaciones.components.NotificacionParametrosComponent;
+import com.everis.examen3academianotificaciones.model.Cliente;
+import com.everis.examen3academianotificaciones.model.Pedido;
+import com.everis.examen3academianotificaciones.model.Producto;
 import com.everis.examen3academianotificaciones.responses.Mensaje;
 import com.everis.examen3academianotificaciones.responses.MensajeResponse;
 import com.everis.examen3academianotificaciones.responses.MensajeUbicacion;
+import com.everis.examen3academianotificaciones.responses.PedidoResponse;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -37,17 +42,37 @@ public class NotificacionController {
 	}
 
 	@GetMapping("/mensajes")
-	public List<MensajeResponse> mensajes() {
+	public List<MensajeResponse> mensajes(@RequestBody PedidoResponse pedidoResponse) {
 		// "(email,whatsapp,ambas)"
+//		if(datosConfiguracion.getEmaildestino() == null) {
+//			datosConfiguracion.setEmaildestino("ing.juan.acc@gmail.com");
+//		}
+//		if(datosConfiguracion.getTiponotificacion() == null) {
+//			datosConfiguracion.setTiponotificacion("(email,whatsapp,ambas)");
+//		}
+//		if(datosConfiguracion.getWhatzmeapitoken() == null) {
+//			datosConfiguracion.setTiponotificacion("12345");
+//		}
+//		if(datosConfiguracion.getWhatsappdestino() == null) {
+//			datosConfiguracion.setWhatsappdestino("525537178391");;
+//		}
+		
 		List<MensajeResponse> respuestas = new ArrayList<>();
+		Pedido pedido = pedidoResponse.getPedido();
+		List<Producto> productos = pedidoResponse.getProductos();
+		Cliente cliente = pedido.getCliente();
+		String productosCadena = "";
+		for(Producto objProducto : productos) {
+			productosCadena = productosCadena + objProducto.toString();
+		}
 		if (datosConfiguracion.getTiponotificacion().indexOf("ambas")>-1) {
 			respuestas = enviarmensaje();
-			MensajeResponse respuestaCorreo = enviarCorreo("ing.juan.acc@gmail.com", "Lista de Productos",
-					"Aqui van los priductos y la ubicacion");
+			
+			MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), productosCadena.toString() , cliente.toString());
 			respuestas.add(respuestaCorreo);
 		}else {
 			if (datosConfiguracion.getTiponotificacion().indexOf("email")>-1) {
-				MensajeResponse respuestaCorreo = enviarCorreo("ing.juan.acc@gmail.com", "Lista de Productos","Aqui van los priductos y la ubicacion");
+				MensajeResponse respuestaCorreo = enviarCorreo(datosConfiguracion.getEmaildestino(), productosCadena.toString() , cliente.toString());
 				respuestas.add(respuestaCorreo);
 			}
 			if (datosConfiguracion.getTiponotificacion().indexOf("whatsapp")>-1) {

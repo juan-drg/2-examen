@@ -22,8 +22,8 @@ public class Producto implements java.io.Serializable {
 	private String nombre;
 	private double precio;
 	private String url;
-	@JsonIgnore
-	private Set<PedidoHasProducto> pedidoHasProductos = new HashSet<PedidoHasProducto>(0);
+	
+//	private Set<PedidoHasProducto> pedidoHasProductos = new HashSet<PedidoHasProducto>(0);
 
 	public Producto() {
 	}
@@ -35,14 +35,14 @@ public class Producto implements java.io.Serializable {
 		this.url = url;
 	}
 
-	public Producto(int idproducto, String nombre, double precio, String url,
-			Set<PedidoHasProducto> pedidoHasProductos) {
-		this.idproducto = idproducto;
-		this.nombre = nombre;
-		this.precio = precio;
-		this.url = url;
-		this.pedidoHasProductos = pedidoHasProductos;
-	}
+//	public Producto(int idproducto, String nombre, double precio, String url,
+//			Set<PedidoHasProducto> pedidoHasProductos) {
+//		this.idproducto = idproducto;
+//		this.nombre = nombre;
+//		this.precio = precio;
+//		this.url = url;
+//		this.pedidoHasProductos = pedidoHasProductos;
+//	}
 
 	
 	public int getIdproducto() {
@@ -81,12 +81,19 @@ public class Producto implements java.io.Serializable {
 	}
 
 
-	public Set<PedidoHasProducto> getPedidoHasProductos() {
-		return this.pedidoHasProductos;
-	}
+//	public Set<PedidoHasProducto> getPedidoHasProductos() {
+//		return this.pedidoHasProductos;
+//	}
+//
+//	public void setPedidoHasProductos(Set<PedidoHasProducto> pedidoHasProductos) {
+//		this.pedidoHasProductos = pedidoHasProductos;
+//	}
 
-	public void setPedidoHasProductos(Set<PedidoHasProducto> pedidoHasProductos) {
-		this.pedidoHasProductos = pedidoHasProductos;
+	@Override
+	public String toString() {
+		return "Producto [idproducto=" + idproducto + ", nombre=" + nombre + ", precio=" + precio + ", url=" + url + "]";
 	}
+	
+	
 
 }
