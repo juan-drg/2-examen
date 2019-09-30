@@ -44,17 +44,17 @@ public class PedidoController {
 		
 		try {
 			pedido.setFechahoraentrega(new Date());
-			pedido.setFechahoraregistro(new Date());
+			pedido.setFechahoraregistro(pedido.getFechahoraentrega());
 			pedido.setCliente(cliente);
 			response.setSuccessful(true);
 			response.setValue(pedido);
 			response.setMessage("Pedido Insertado");
 			
-			pedidoService.insertar(pedido);
+			Pedido pedidoRegistrado = pedidoService.insertar(pedido);
 			
 //			pedido.setIdpedido(pedidoService.buscar(pedido.getFechahoraentrega()));
 			PedidoHasProducto pedidoHasProducto = new PedidoHasProducto();
-			pedidoHasProducto.setPedido(pedido);
+			pedidoHasProducto.setPedido(pedidoRegistrado);
 			pedidoHasProducto.setProducto(producto);
 			
 			hashService.insertar(pedidoHasProducto);
