@@ -56,6 +56,7 @@ public class NotificacionController {
 //		if(datosConfiguracion.getWhatsappdestino() == null) {
 //			datosConfiguracion.setWhatsappdestino("525537178391");;
 //		}
+		//nnncas
 		
 		List<MensajeResponse> respuestas = new ArrayList<>();
 		Pedido pedido = pedidoResponse.getPedido();
