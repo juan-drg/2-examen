@@ -60,7 +60,11 @@
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>
+<<<<<<< Updated upstream
 				spring-cloud-starter-netflix-eureka-client
+=======
+				spring-cloud-starter-netflix-eureka-server
+>>>>>>> Stashed changes
 			</artifactId>
 		</dependency>
 	</dependencies>
