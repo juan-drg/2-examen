@@ -13,7 +13,10 @@ import com.everist.examentres.pedidos.model.Cliente;
 import com.everist.examentres.pedidos.model.Pedido;
 import com.everist.examentres.pedidos.model.PedidoHasProducto;
 import com.everist.examentres.pedidos.model.Producto;
+import com.everist.examentres.pedidos.proxy.PedidoServiceProxy;
 import com.everist.examentres.pedidos.request.PedidoRequest;
+import com.everist.examentres.pedidos.responses.FinalResponse;
+import com.everist.examentres.pedidos.responses.MensajeResponse;
 import com.everist.examentres.pedidos.responses.PedidoResponse;
 import com.everist.examentres.pedidos.service.ClienteService;
 import com.everist.examentres.pedidos.service.HashService;
@@ -35,9 +38,13 @@ public class PedidoController {
 	@Autowired
 	private HashService hashService;
 	
+	@Autowired
+	PedidoServiceProxy pedidoServiceProxy;
+	
 	@PostMapping("/pedido/")
-	public PedidoResponse insertarPedido(@RequestBody PedidoRequest pedidoRecibido) {
-		
+	public FinalResponse insertarPedido(@RequestBody PedidoRequest pedidoRecibido) {
+
+		FinalResponse respuestaFinal = new FinalResponse();
 		Pedido pedido = pedidoRecibido.getPedido();
 		Cliente cliente = clienteService.findById(pedido.getCliente().getIdcliente());
 		
@@ -72,12 +79,26 @@ public class PedidoController {
 			
 			response.setProductos(productosObtenidos);
 			
+			List<MensajeResponse> wattsPedidoResponse = pedidoServiceProxy.retrieveNotificaciones(response);
+			
+			if(wattsPedidoResponse.isEmpty()) {
+				respuestaFinal.setExito(false);
+				respuestaFinal.setMensaje("Sin conexión a watsApp");
+				respuestaFinal.setCodigo("401");
+			}else {
+				respuestaFinal.setExito(true);
+				respuestaFinal.setMensaje("Operación éxitosa");
+				respuestaFinal.setCodigo("200");
+				respuestaFinal.setWattsAppResponse(wattsPedidoResponse);
+				respuestaFinal.setPedidoResponse(response);
+			}
+			
 		}catch (Exception e) {
 			e.printStackTrace();
-			response.setMessage("Error al insertar pedido: " + e.getMessage());
-			response.setSuccessful(true);
+			respuestaFinal.setMensaje("Error al insertar pedido: " + e.getMessage());
+			respuestaFinal.setExito(false);
 		}
-		return response;
+		return respuestaFinal;
 	}
 	
 	

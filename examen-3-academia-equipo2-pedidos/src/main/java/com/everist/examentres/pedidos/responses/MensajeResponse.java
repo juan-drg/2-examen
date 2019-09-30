@@ -1,17 +1,16 @@
 package com.everist.examentres.pedidos.responses;
 
-public class MensajeResponses {
+public class MensajeResponse {
 	
-	Boolean exito;
-	String codigo;
-	String instancia;
-	String mensajeError;
-	String respuesta;
-	
-	public Boolean getExito() {
+	  private String exito;
+	  private String codigo;
+	  private String instancia;
+	  private String mensajeError;
+	  private String respuesta;
+	public String getExito() {
 		return exito;
 	}
-	public void setExito(Boolean exito) {
+	public void setExito(String exito) {
 		this.exito = exito;
 	}
 	public String getCodigo() {
@@ -38,5 +37,5 @@ public class MensajeResponses {
 	public void setRespuesta(String respuesta) {
 		this.respuesta = respuesta;
 	}
-
+	
 }
